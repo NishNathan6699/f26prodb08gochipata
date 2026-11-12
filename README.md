@@ -1,6 +1,9 @@
-# WA Lab 10
 
-Express application using Pug templates.
+# WA Assignment 11
 
-Live Render server:
-https://f26pro08gochipata.onrender.com 
+## GitHub Repository
+https://github.com/NishNathan6699/f26prodb08gochipata
+
+## Render Server
+https://f26prodb08gochipata.onrender.com
+ 
