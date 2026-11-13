@@ -45,8 +45,26 @@ exports.hikingtrail_list = async function(req, res) {
 
 
 // Get one hiking trail
-exports.hikingtrail_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: Hiking Trail detail: ' + req.params.id);
+
+exports.hikingtrail_detail = async function(req, res) {
+  console.log("Detail for ID: " + req.params.id);
+
+  try {
+    const result = await HikingTrail.findById(req.params.id);
+
+    if (!result) {
+      return res.status(404).json({
+        error: "Hiking trail not found"
+      });
+    }
+
+    res.json(result);
+
+  } catch (err) {
+    res.status(400).json({
+      error: "Invalid hiking trail ID or request"
+    });
+  }
 };
 
 // Create a hiking trail using POST
@@ -72,6 +90,35 @@ exports.hikingtrail_delete = function(req, res) {
 };
 
 // Update a hiking trail using PUT
-exports.hikingtrail_update_put = function(req, res) {
-  res.send('NOT IMPLEMENTED: Hiking Trail update PUT ' + req.params.id);
+
+exports.hikingtrail_update_put = async function(req, res) {
+  try {
+    const trail = await HikingTrail.findById(req.params.id);
+
+    if (!trail) {
+      return res.status(404).json({
+        error: "Hiking trail not found"
+      });
+    }
+
+    if (req.body.name !== undefined)
+      trail.name = req.body.name;
+
+    if (req.body.location !== undefined)
+      trail.location = req.body.location;
+
+    if (req.body.difficulty !== undefined)
+      trail.difficulty = req.body.difficulty;
+
+    if (req.body.length !== undefined)
+      trail.length = req.body.length;
+
+    const result = await trail.save();
+    res.json(result);
+
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    });
+  }
 };
