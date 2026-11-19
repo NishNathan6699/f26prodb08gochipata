@@ -1,4 +1,20 @@
-extends hikingtrail_details
+extends layout
 
-block control
-  a.btn.btn-primary(href='/hikingtrails') OK
+block content
+  h1= title
+  div
+    div.row
+      div(class='trailAttr mr-3') Trail ID is:
+      div #{trail._id}
+    div.row
+      div(class='trailAttr mr-3') Name is:
+      div #{trail.name}
+    div.row
+      div(class='trailAttr mr-3') Location is:
+      div #{trail.location}
+    div.row
+      div(class='trailAttr mr-3') Difficulty is:
+      div #{trail.difficulty}
+    div.row
+      div(class='trailAttr mr-3') Length is:
+      div #{trail.length}

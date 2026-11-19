@@ -1,7 +1,36 @@
-extends hikingtrail_details
+extends layout
 
-block control
-  button.btn.btn-primary(type='button', disabled) Update
-
-block scripts
-  p.text-muted.mt-3 Updating trails will be available when the update endpoint is implemented.
+block content
+  h1= title
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{trail._id}
+  - let actionid = "/resource/hikingtrails/" + trail._id
+  form(id='TrailForm', action=actionid)
+    div.form-group
+      label.trailAttr(for='name') Name
+      input#name(type='text', name='name', value=trail.name)
+    div.form-group
+      label.trailAttr(for='location') Location
+      input#location(type='text', name='location', value=trail.location)
+    div.form-group
+      label.trailAttr(for='difficulty') Difficulty
+      input#difficulty(type='text', name='difficulty', value=trail.difficulty)
+    div.form-group
+      label.trailAttr(for='length') Length
+      input#length(type='number', step='any', name='length', value=trail.length)
+    input(type="submit")
+  script.
+    document.forms['TrailForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target))
+      }).then((resp) => {
+        return resp.json();
+      }).then((body) => {
+        alert("Update succeeded");
+      }).catch((error) => {
+        alert("Update failed " + error);
+      });
+    });

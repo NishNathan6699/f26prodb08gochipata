@@ -1,23 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const api_controller = require('../controllers/api');
+const hikingtrail_controller = require('../controllers/hikingtrail');
 
-
-// Import controllers
-var api_controller = require('../controllers/api');
-var hikingtrail_controller = require('../controllers/hikingtrail');
-
-// API specification
 router.get('/', api_controller.api);
-
-// Hiking trail resource endpoints
-router.post('/hikingtrails', hikingtrail_controller.hikingtrail_create_post);
-
-router.delete('/hikingtrails/:id', hikingtrail_controller.hikingtrail_delete);
-
-router.put('/hikingtrails/:id', hikingtrail_controller.hikingtrail_update_put);
-
-router.get('/hikingtrails/:id', hikingtrail_controller.hikingtrail_detail);
-
 router.get('/hikingtrails', hikingtrail_controller.hikingtrail_list);
+router.get('/hikingtrails/:id', hikingtrail_controller.hikingtrail_detail);
+router.post('/hikingtrails', hikingtrail_controller.hikingtrail_create_post);
+router.put('/hikingtrails/:id', hikingtrail_controller.hikingtrail_update_put);
+router.delete('/hikingtrails/:id', hikingtrail_controller.hikingtrail_delete);
 
 module.exports = router;

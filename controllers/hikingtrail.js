@@ -7,7 +7,9 @@ exports.hikingtrail_create_Page = function(req, res) {
 
 exports.hikingtrail_item_Page = async function(req, res, next) {
   try {
-    if (!/^[a-fA-F0-9]{24}$/.test(req.params.id)) return res.status(400).send('Invalid trail ID');
+        if (!/^[a-fA-F0-9]{24}$/.test(req.params.id)) {
+      return res.status(400).json({ error: 'Invalid hiking trail ID' });
+    }
     const trail = await HikingTrail.findById(req.params.id);
     if (!trail) return res.status(404).send('Trail not found');
     const mode = req.params.mode || 'inspect';
@@ -84,11 +86,6 @@ exports.hikingtrail_create_post = async function(req, res) {
   }
 };
 
-// Delete a hiking trail using DELETE
-exports.hikingtrail_delete = function(req, res) {
-  res.send('NOT IMPLEMENTED: Hiking Trail delete DELETE ' + req.params.id);
-};
-
 // Update a hiking trail using PUT
 
 exports.hikingtrail_update_put = async function(req, res) {
@@ -115,6 +112,33 @@ exports.hikingtrail_update_put = async function(req, res) {
 
     const result = await trail.save();
     res.json(result);
+
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+exports.hikingtrail_delete = async function (req, res) {
+  const { id } = req.params;
+  if (!/^[a-fA-F0-9]{24}$/.test(id)) {
+    return res.status(400).json({ error: 'Invalid hiking trail ID' });
+  }
+
+  try {
+    const result = await HikingTrail.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(404).json({
+        error: "Hiking trail not found"
+      });
+    }
+
+    res.json({
+      message: "Hiking trail deleted",
+      deleted: result
+    });
 
   } catch (err) {
     res.status(500).json({
