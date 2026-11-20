@@ -1,0 +1,55 @@
+
+extends layout
+
+block content
+  h1= title
+
+  - let trailid = toShow._id
+  - let trailname = toShow.name
+  - let location = toShow.location
+  - let difficulty = toShow.difficulty
+  - let length = toShow.length
+  - let actionid = "/resource/hikingtrails/" + trailid
+
+  div.row.mb-3
+    strong Trail ID:
+    span.ml-2 #{trailid}
+
+  form(id='TrailForm', action=actionid)
+    div.form-group
+      label(for='name') Trail Name
+      input#name.form-control(type='text', name='name', value=trailname)
+
+    div.form-group
+      label(for='location') Location
+      input#location.form-control(type='text', name='location', value=location)
+
+    div.form-group
+      label(for='difficulty') Difficulty
+      input#difficulty.form-control(type='text', name='difficulty', value=difficulty)
+
+    div.form-group
+      label(for='length') Length
+      input#length.form-control(type='text', name='length', value=length)
+
+    button.btn.btn-primary(type='submit') Update Hiking Trail
+
+  script.
+    document.forms['TrailForm'].addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      try {
+        const response = await fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target))
+        });
+
+        if (!response.ok) {
+          throw new Error(await response.text());
+        }
+
+        alert("Hiking trail updated successfully!");
+      } catch (error) {
+        alert("Update failed: " + error.message);
+      }
+    });

@@ -146,3 +146,24 @@ exports.hikingtrail_delete = async function (req, res) {
     });
   }
 };
+// Handle building the update page
+exports.hikingtrail_update_Page = async function(req, res) {
+    console.log("Update view for id " + req.query.id);
+
+    try {
+        let result = await Hikingtrail.findById(req.query.id);
+
+        if (result == null) {
+            res.status(404).send("Hiking trail not found");
+            return;
+        }
+
+        res.render('hikingtrailupdate', {
+            title: 'Update Hiking Trail',
+            toShow: result
+        });
+
+    } catch(err) {
+        res.status(500).send({"error": err.message});
+    }
+};
