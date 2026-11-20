@@ -1,0 +1,57 @@
+
+extends layout
+
+block content
+  h1 Delete Hiking Trail
+
+  p
+    strong Trail ID:
+    |  #{toShow._id}
+
+  p
+    strong Name:
+    |  #{toShow.name}
+
+  p
+    strong Location:
+    |  #{toShow.location}
+
+  p
+    strong Difficulty:
+    |  #{toShow.difficulty}
+
+  p
+    strong Length:
+    |  #{toShow.length}
+
+  button#deleteButton Delete Hiking Trail
+  button#cancelButton(type="button") Cancel
+
+  script.
+    const trailId = "#{toShow._id}";
+
+    document.getElementById('deleteButton').addEventListener('click', async function() {
+      if (!confirm('Are you sure you want to delete this hiking trail?')) {
+        return;
+      }
+
+      try {
+        const response = await fetch('/resource/hikingtrails/' + trailId, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          alert('Hiking trail deleted successfully!');
+          window.location.href = '/hikingtrails';
+        } else {
+          const result = await response.json();
+          alert(result.error || 'Delete failed');
+        }
+      } catch (err) {
+        alert('Error deleting hiking trail');
+      }
+    });
+
+    document.getElementById('cancelButton').addEventListener('click', function() {
+      window.location.href = '/hikingtrails';
+    });

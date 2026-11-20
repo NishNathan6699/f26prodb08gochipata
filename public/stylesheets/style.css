@@ -10,3 +10,64 @@ a {
   background-color: aquamarine;
   width: 120px;
 }
+
+/* Hiking Trails page styling */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f7f5;
+    color: #26352d;
+    margin: 0;
+    padding: 30px;
+}
+
+h1 {
+    color: #205c3b;
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+label {
+    display: inline-block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #b8c9bd;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button,
+input[type="submit"] {
+    background-color: #267447;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 8px 5px 8px 0;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #174d2e;
+}
+
+a {
+    color: #267447;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

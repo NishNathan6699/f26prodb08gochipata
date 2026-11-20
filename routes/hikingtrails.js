@@ -17,9 +17,10 @@ router.get('/update',
 router.get('/delete',
     hikingtrail_controller.hikingtrail_delete_Page);
 
-// Detail / individual trail pages
+// Detail page
 router.get('/:id', hikingtrail_controller.hikingtrail_item_Page);
 
+// Detail page with mode
 router.get('/:id/:mode',
     hikingtrail_controller.hikingtrail_item_Page);
 
