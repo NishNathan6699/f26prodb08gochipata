@@ -4,6 +4,7 @@ extends layout
 block content
   h1= title
   p Available Hiking Trails
+
   a.btn.btn-primary.mb-3(href='/hikingtrails/create') Add Trail
 
   - let items = results
@@ -16,9 +17,16 @@ block content
           p Location: #{item.location}
           p Distance: #{item.length} miles
           p Difficulty: #{item.difficulty}
+
+          // LAB 13 PART 1: Buttons for each trail
+          - let detailLink = '/hikingtrails/' + item._id
+          - let updateLink = '/hikingtrails/update?id=' + item._id
+          - let deleteLink = '/hikingtrails/' + item._id + '/delete'
+
           .d-flex.gap-2.flex-wrap
-            a.btn.btn-outline-primary(href='/hikingtrails/' + item._id) Inspect
-            a.btn.btn-outline-secondary(href='/hikingtrails/' + item._id + '/update') Update
-            a.btn.btn-outline-danger(href='/hikingtrails/' + item._id + '/delete') Delete
+            a.btn.btn-outline-primary(href=detailLink) Inspect
+            a.btn.btn-primary(href=updateLink) Update
+            a.btn.btn-outline-danger(href=deleteLink) Delete
+
       else
         p No hiking trails found.

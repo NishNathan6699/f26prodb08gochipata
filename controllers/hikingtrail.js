@@ -249,10 +249,12 @@ exports.hikingtrail_update_Page = async function(req, res) {
             return res.status(404).send('Hiking trail not found');
         }
 
-        res.render('hikingtrailupdate', {
-            title: 'Update Hiking Trail',
-            trail: result
-        });
+        
+         res.render('hikingtrailupdate', {
+         title: 'Update Hiking Trail',
+         toShow: result
+         });
+
 
     } catch (err) {
         res.status(500).send('Error: ' + err.message);

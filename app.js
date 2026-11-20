@@ -67,6 +67,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// LAB 13 PART 2 - Passport imports
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var session = require('express-session');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var hikingtrailsRouter = require('./routes/hikingtrails');
@@ -85,6 +90,17 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// LAB 13 PART 2 - Session middleware
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'development-only-secret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
@@ -98,6 +114,15 @@ app.use('/selector', pickRouter);
 console.log('Hiking trails route registered');
 console.log('Resource router type:', typeof resourceRouter);
 app.use('/resource', resourceRouter);
+
+// LAB 13 PART 2 - Passport configuration
+var Account = require('./models/account');
+
+passport.use(new LocalStrategy(Account.authenticate()));
+
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
